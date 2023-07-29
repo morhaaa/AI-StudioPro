@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { Montserrat } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 import {
   Code,
   Image,
@@ -63,6 +64,7 @@ const routes = [
 ];
 
 const Sidebar: React.FC = () => {
+  const pathname = usePathname();
   return (
     <div className="w-full h-full bg-blue-900">
       <nav>
@@ -76,10 +78,19 @@ const Sidebar: React.FC = () => {
         </Link>
         <div>
           {routes.map((route, index) => (
-            <Link href={route.href} key={index}>
+            <Link
+              href={route.href}
+              key={index}
+              className={cn(
+                "flex justify-start hover:bg-white/10 rounded-lg transition",
+                pathname === route.href
+                  ? "text-white bg-white/10"
+                  : "text-zinc-400"
+              )}
+            >
               <div className="flex gap-2 items-center">
                 <route.icon className={cn("h-10 w-10", route.colorIcon)} />
-                <p className="text-2xl text-white">{route.label}</p>
+                <p className="text-2xl text-white font-medium">{route.label}</p>
               </div>
             </Link>
           ))}

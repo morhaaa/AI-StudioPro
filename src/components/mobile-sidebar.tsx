@@ -3,19 +3,32 @@ import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Sidebar from "@/components/sidebar";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { useEffect, useState } from "react";
 
 const MobileSidebar: React.FC = () => {
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
+
   return (
-    <Sheet>
-      <SheetTrigger>
-        <Button variant={"ghost"} size={"icon"} className="md:hidden">
-          <Menu />
-        </Button>
-      </SheetTrigger>
-      <SheetContent side={"left"} className="p-0 md:hidden">
-        <Sidebar />
-      </SheetContent>
-    </Sheet>
+    <div className="md:hidden">
+      <Sheet>
+        <SheetTrigger>
+          <Button variant={"ghost"} size={"icon"}>
+            <Menu />
+          </Button>
+        </SheetTrigger>
+        <SheetContent side={"left"} className="p-0">
+          <Sidebar />
+        </SheetContent>
+      </Sheet>
+    </div>
   );
 };
 
