@@ -15,7 +15,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Empty } from "@/components/empty";
 import { Loader } from "@/components/loader";
-import { cn } from "@/lib/utils";
+import { useProModal } from "@/hooks/use-pro-modal";
+import { toast } from "react-hot-toast";
+
 import {
   Select,
   SelectContent,
@@ -27,6 +29,7 @@ import { Card, CardFooter } from "@/components/ui/card";
 
 const ImagePage: React.FC = () => {
   const router = useRouter();
+  const proModal = useProModal();
   const [images, setImages] = useState<string[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -38,18 +41,23 @@ const ImagePage: React.FC = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setImages([]);
+
       const response = await axios.post("/api/image", values);
+
       const urls = response.data.map((image: { url: string }) => image.url);
 
       setImages(urls);
-      form.reset();
-    } catch (error) {
-      //TODO: Open AI PRO Modal
-      console.log(error);
+    } catch (error: any) {
+      if (error?.response?.status === 403) {
+        proModal.onOpen();
+      } else {
+        toast.error("Something went wrong.");
+      }
     } finally {
       router.refresh();
     }
   };
+
   return (
     <div>
       <Heading

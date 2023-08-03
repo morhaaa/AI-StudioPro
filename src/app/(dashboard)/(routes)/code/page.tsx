@@ -19,9 +19,12 @@ import { Loader } from "@/components/loader";
 import { cn } from "@/lib/utils";
 import { BotAvatar } from "@/components/bot-avatar";
 import { UserAvatar } from "@/components/avatar";
+import { toast } from "react-hot-toast";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 const CodePage: React.FC = () => {
   const router = useRouter();
+  const proModal = useProModal();
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -36,24 +39,23 @@ const CodePage: React.FC = () => {
         role: "user",
         content: values.prompt,
       };
-      const newMessage = [...messages, userMessage];
-      const response = await axios.post("/api/code", {
-        messages: newMessage,
-      });
+      const newMessages = [...messages, userMessage];
 
-      setMessages((currentMessage) => [
-        ...currentMessage,
-        userMessage,
-        response.data,
-      ]);
+      const response = await axios.post("/api/code", { messages: newMessages });
+      setMessages((current) => [...current, userMessage, response.data]);
+
       form.reset();
-    } catch (error) {
-      //TODO: Open AI PRO Modal
-      console.log(error);
+    } catch (error: any) {
+      if (error?.response?.status === 403) {
+        proModal.onOpen();
+      } else {
+        toast.error("Something went wrong.");
+      }
     } finally {
       router.refresh();
     }
   };
+
   return (
     <div>
       <Heading
