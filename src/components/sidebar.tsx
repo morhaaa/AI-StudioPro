@@ -12,6 +12,7 @@ import {
   Settings,
   Video,
 } from "lucide-react";
+import { FreeCounter } from "./free-Counter";
 
 const montserrat = Montserrat({
   weight: "600",
@@ -62,12 +63,14 @@ const routes = [
     colorIcon: "text-fuchsia-500",
   },
 ];
-
-const Sidebar: React.FC = () => {
+interface ISidebar {
+  apiLimitCount: number;
+}
+const Sidebar: React.FC<ISidebar> = ({ apiLimitCount }) => {
   const pathname = usePathname();
   return (
-    <div className="w-full h-full bg-blue-900">
-      <nav>
+    <div className="space-y-4 py-4 flex flex-col h-full bg-[#111827] text-white">
+      <nav className="px-3 py-2 flex-1">
         <Link href={{ pathname: "/dashboard" }}>
           <div className="flex w-full gap-2">
             <p className="text-white font-semibold">LOGO</p>
@@ -96,6 +99,7 @@ const Sidebar: React.FC = () => {
           ))}
         </div>
       </nav>
+      <FreeCounter apiLimitCount={apiLimitCount} isPro={true} />
     </div>
   );
 };
