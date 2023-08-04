@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs";
 
 import prismadb from "@/lib/prismadb";
 
-const DAY_IN_MS = 86_400_000;
+const DAY_IN_MS = 86_400_000; // giorno in ms
 
 export const checkSubscription = async () => {
   const { userId } = auth();
@@ -30,7 +30,7 @@ export const checkSubscription = async () => {
   const isValid =
     userSubscription.stripePriceId &&
     userSubscription.stripeCurrentPeriodEnd?.getTime()! + DAY_IN_MS >
-      Date.now();
+      Date.now(); // controlliamo che non sia scaduto la sua iscrizione
 
   return !!isValid;
 };
