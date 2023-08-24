@@ -11,16 +11,7 @@ export const LandingHero = () => {
   const { isSignedIn } = useAuth();
 
   return (
-    <div className="text-white font-bold py-36 text-center flex flex-col relative">
-      {/* background hero */}
-      <div className="absolute z-[0] h-full w-full top-0 ">
-        <Image
-          src="/background-hero.svg"
-          alt="background"
-          fill
-          className="object-contain"
-        />
-      </div>
+    <div className="text-white font-bold py-36 text-center flex flex-col items-center justify-center relative">
       {/* content */}
       <div className="z-50 flex flex-col gap-4">
         <div className="flex flex-col gap-2 py-2 text-transparent bg-clip-text bg-gradient-to-br from-white via-slate-300 to-gray-800">
@@ -42,7 +33,7 @@ export const LandingHero = () => {
         </div>
         <div className="flex flex-col gap-2">
           <div className="text-sm md:text-xl font-light text-zinc-400">
-            Create content using AI 10x faster.
+            Unlock the power of AI
           </div>
           <div>
             <Link href={isSignedIn ? "/dashboard" : "/sign-up"}>
