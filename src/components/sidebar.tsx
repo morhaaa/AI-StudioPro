@@ -70,7 +70,7 @@ interface ISidebar {
 const Sidebar: React.FC<ISidebar> = ({ apiLimitCount, isPro }) => {
   const pathname = usePathname();
   return (
-    <div className="space-y-4 py-4 flex flex-col h-full bg-[#111827] text-white">
+    <div className="space-y-4 py-4 flex flex-col h-full text-white bg-inherit">
       <nav className="px-3 py-2 flex-1">
         <Link href={{ pathname: "/dashboard" }}>
           <div className="flex w-full gap-2">

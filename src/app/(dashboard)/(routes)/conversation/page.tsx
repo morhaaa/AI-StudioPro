@@ -56,67 +56,91 @@ const Conversation: React.FC = () => {
       router.refresh();
     }
   };
+
   return (
-    <div>
+    <div className="h-full w-full flex flex-col">
       <Heading
         title="Conversation"
         description="Our most advanced conversation model"
         icon={MessageSquare}
         iconColor="text-orange-500"
-        bgColor="bg-orange-500/10"
+        bgColor="bg-orange-500/10 border-b border-slate-200"
       />
-      <div className="px-4 lg:px-8">
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-2"
-          >
-            <FormField
-              name="prompt"
-              render={({ field }) => (
-                <FormItem className="col-span-12 lg:col-span-10">
-                  <FormControl className="m-0 p-0">
-                    <Input
-                      className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
-                      disabled={isLoading}
-                      placeholder="How do I calculate the radius of a circle"
-                      {...field}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <Button className="col-span-12 lg:col-span-2" disabled={isLoading}>
-              Generate
-            </Button>
-          </form>
-        </Form>
-        <div className="space-y-4 mt-4">
-          {true && (
-            <div className="p-8 rounded-lg w-full flex items-center bg-muted justify-center ">
-              <Loader />
-            </div>
-          )}
-          {messages.length === 0 && !isLoading && (
-            <Empty label="No conversation started." />
-          )}
-          <div className="flex flex-col-reverse gap-y-4">
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={cn(
-                  "p-8 w-full flex items-start gap-x-8 rounded-lg",
-                  msg.role === "user"
-                    ? "bg-white border border-black/10"
-                    : "bg-muted"
-                )}
+
+      <div className="px-4 lg:px-10 flex flex-col gap-4 h-full py-4">
+        <div className="bg-slate-100 grow rounded-xl border border-slate-200 flex flex-col">
+          <div className="grow">
+            {messages.length === 0 && !isLoading && (
+              <Empty label="No conversation started." />
+            )}
+          </div>
+
+          <div className="p-4">
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-2 bg-white"
               >
-                {msg.role === "user" ? <UserAvatar /> : <BotAvatar />}
-                <p className="text-sm">{msg.content}</p>
-              </div>
-            ))}
+                <FormField
+                  name="prompt"
+                  render={({ field }) => (
+                    <FormItem className="col-span-12 lg:col-span-10">
+                      <FormControl className="m-0 p-0">
+                        <Input
+                          className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
+                          disabled={isLoading}
+                          placeholder="How do I calculate the radius of a circle"
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  className="col-span-12 lg:col-span-2"
+                  disabled={isLoading}
+                >
+                  Generate
+                </Button>
+              </form>
+            </Form>
           </div>
         </div>
+
+        {/* <div className="bg-slate-200 rounded-lg grow ">
+          <div className="space-y-4 mt-4">
+            {isLoading && (
+              <div className="p-8 rounded-lg w-full flex items-center bg-muted justify-center ">
+                <Loader />
+              </div>
+            )}
+
+            <div>
+              {messages.length === 0 && !isLoading && (
+                <Empty label="No conversation started." />
+              )}
+
+              <div className="flex flex-col-reverse gap-y-4">
+                {messages.map((msg, index) => (
+                  <div
+                    key={index}
+                    className={cn(
+                      "p-8 w-full flex items-start gap-x-8 rounded-lg",
+                      msg.role === "user"
+                        ? "bg-white border border-black/10"
+                        : "bg-muted"
+                    )}
+                  >
+                    {msg.role === "user" ? <UserAvatar /> : <BotAvatar />}
+                    <p className="text-sm">{msg.content}</p>
+                  </div>
+                ))}
+              </div>
+
+              
+            </div>
+          </div>
+                    </div> */}
       </div>
     </div>
   );
