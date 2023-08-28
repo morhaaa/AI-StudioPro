@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Heading from "@/components/heading";
 import { MessageSquare } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -31,7 +31,16 @@ const Conversation: React.FC = () => {
     defaultValues: { prompt: "" },
   });
 
+  const chatRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   const isLoading = form.formState.isSubmitting;
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const userMessage: ChatCompletionRequestMessage = {
@@ -58,38 +67,68 @@ const Conversation: React.FC = () => {
   };
 
   return (
-    <div className="h-full w-full flex flex-col">
+    <div className="h-full w-full flex flex-col overflow-hidden">
       <Heading
         title="Conversation"
-        description="Our most advanced conversation model"
+        description="Our most advanced AI conversation model"
         icon={MessageSquare}
         iconColor="text-orange-500"
         bgColor="bg-orange-500/10 border-b border-slate-200"
       />
 
-      <div className="px-4 lg:px-10 flex flex-col gap-4 h-full py-4">
-        <div className="bg-slate-100 grow rounded-xl border border-slate-200 flex flex-col">
-          <div className="grow">
+      <div className="px-4 lg:px-10 flex flex-col gap-4 h-full py-4 overflow-hidden">
+        <div className="bg-slate-100 h-full rounded-xl border border-slate-200 flex flex-col overflow-hidden">
+          <div className="h-full overflow-hidden">
             {messages.length === 0 && !isLoading && (
               <Empty label="No conversation started." />
             )}
+
+            {/* Chat */}
+            <div
+              ref={chatRef}
+              className="flex flex-col gap-6 px-3 py-6 overflow-auto h-full"
+            >
+              {messages.map((msg, index) => (
+                <div
+                  key={index}
+                  className={cn(
+                    "flex gap-2",
+                    msg.role === "user"
+                      ? "flex-row-reverse pl-10 lg:pl-20"
+                      : "pr-10 lg:pr-20"
+                  )}
+                >
+                  <div className="hidden md:flex">
+                    {msg.role === "user" ? <UserAvatar /> : <BotAvatar />}
+                  </div>
+                  <div
+                    className={cn(
+                      " px-4 py-2 rounded-md flex items-center shadow-lg border",
+                      msg.role === "user" ? "bg-blue-500" : "bg-slate-500 "
+                    )}
+                  >
+                    <p className="text-sm text-white">{msg.content}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="p-4">
+          <div className="p-4 flex flex-col w-full">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-2 bg-white"
+                className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm flex flex-col md:flex-row bg-white"
               >
                 <FormField
                   name="prompt"
                   render={({ field }) => (
-                    <FormItem className="col-span-12 lg:col-span-10">
+                    <FormItem className="col-span-12 lg:col-span-10 w-full">
                       <FormControl className="m-0 p-0">
                         <Input
-                          className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
+                          className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent w-full"
                           disabled={isLoading}
-                          placeholder="How do I calculate the radius of a circle"
+                          placeholder="How do I calculate the radius of a circle?"
                           {...field}
                         />
                       </FormControl>
@@ -120,23 +159,7 @@ const Conversation: React.FC = () => {
                 <Empty label="No conversation started." />
               )}
 
-              <div className="flex flex-col-reverse gap-y-4">
-                {messages.map((msg, index) => (
-                  <div
-                    key={index}
-                    className={cn(
-                      "p-8 w-full flex items-start gap-x-8 rounded-lg",
-                      msg.role === "user"
-                        ? "bg-white border border-black/10"
-                        : "bg-muted"
-                    )}
-                  >
-                    {msg.role === "user" ? <UserAvatar /> : <BotAvatar />}
-                    <p className="text-sm">{msg.content}</p>
-                  </div>
-                ))}
-              </div>
-
+           
               
             </div>
           </div>
