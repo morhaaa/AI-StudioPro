@@ -1,34 +1,48 @@
-import { LucideIcon } from "lucide-react";
+"use client";
 import { cn } from "@/lib/utils";
+import { ImageIcon, MessageSquare } from "lucide-react";
+import { usePathname } from "next/navigation";
 
-interface Props {
-  title: string;
-  description: string;
-  icon: LucideIcon;
-  iconColor?: string;
-  bgColor?: string;
-}
+const headers = [
+  {
+    id: "conversation",
+    title: "Conversation",
+    description: "Our most advanced AI conversation model",
+    icon: <MessageSquare className={cn("w-10 h-10 text-orange-500")} />,
+    bgColor: "bg-orange-500/10 border-b border-slate-200",
+  },
+  {
+    id: "image",
+    title: "Image Generation",
+    description: "Turn your prompt into an image",
+    icon: <ImageIcon className={cn("w-10 h-10 text-pink-700")} />,
+    bgColor: "bg-pink-700/10",
+  },
+];
 
-const Heading: React.FC<Props> = ({
-  title,
-  description,
-  icon: Icon,
-  iconColor,
-  bgColor,
-}) => {
-  return (
-    <div className="border-b-2 drop-shadow-md">
-      <div className="px-4 lg:px-8 flex items-center gap-x-3 py-4">
-        <div className={cn("p-2 w-fit rounded-md", bgColor)}>
-          <Icon className={cn("w-10 h-10", iconColor)} />
-        </div>
-        <div>
-          {" "}
-          <h2 className="text-3xl font-bold">{title}</h2>
-          <p className="text-sm text-muted-foreground">{description}</p>
+const Heading: React.FC = ({}) => {
+  const pathName = usePathname();
+  const value = pathName.substring(1); // remove '/' from pathName
+
+  return headers.map((header, index) =>
+    header.id === value ? (
+      <div key={index} className="border-b-2 drop-shadow-md">
+        <div className="px-4 lg:px-8 flex items-center gap-x-3 py-4">
+          <div className={cn("p-2 w-fit rounded-md", header.bgColor)}>
+            {header.icon}
+          </div>
+          <div>
+            {" "}
+            <h2 className="md:text-3xl font-bold">{header.title}</h2>
+            <p className="text-xs md:text-sm text-muted-foreground">
+              {header.description}
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    ) : (
+      ""
+    )
   );
 };
 
