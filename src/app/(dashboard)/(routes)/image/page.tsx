@@ -60,12 +60,12 @@ const ImagePage: React.FC = () => {
 
   return (
     <div className="h-full overflow-hidden flex flex-col">
-      <div className="h-full overflow-hidden flex justify-center items-center">
+      <div className="h-full overflow-hidden flex justify-center items-center p-8">
         {images.length === 0 && !isLoading && (
           <Empty label="No images generated." />
         )}
 
-        <div className="flex flex-wrap justify-center gap-4 p-8 overflow-auto h-full">
+        <div className="flex flex-wrap justify-center gap-4 overflow-auto h-full">
           {images.map((src) => (
             <div key={src}>
               <Card className="rounded-lg ">
@@ -178,34 +178,6 @@ const ImagePage: React.FC = () => {
           </form>
         </Form>
       </div>
-      {/*
-        {isLoading && (
-          <div className="p-20">
-            <Loader />
-          </div>
-        )}
-        {images.length === 0 && !isLoading && (
-          <Empty label="No images generated." />
-        )}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8">
-          {images.map((src) => (
-            <Card key={src} className="rounded-lg overflow-hidden">
-              <div className="relative aspect-square">
-                <Image fill alt="Generated" src={src} />
-              </div>
-              <CardFooter className="p-2">
-                <Button
-                  onClick={() => window.open(src)}
-                  variant="secondary"
-                  className="w-full"
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  Download
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-          </div>*/}
     </div>
   );
 };

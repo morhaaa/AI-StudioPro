@@ -1,6 +1,13 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { ImageIcon, MessageSquare } from "lucide-react";
+import {
+  FileAudio,
+  FileVideo,
+  ImageIcon,
+  MessageSquare,
+  Music,
+  Video,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 
 const headers = [
@@ -17,6 +24,20 @@ const headers = [
     description: "Turn your prompt into an image",
     icon: <ImageIcon className={cn("w-10 h-10 text-pink-700")} />,
     bgColor: "bg-pink-700/10",
+  },
+  {
+    id: "music",
+    title: "Music Generation",
+    description: "Turn your prompt into music.",
+    icon: <Music className={cn("w-10 h-10 text-emerald-500")} />,
+    bgColor: "bg-emerald-500/10",
+  },
+  {
+    id: "video",
+    title: "Video Generation",
+    description: "Turn your prompt into video.",
+    icon: <Video className={cn("w-10 h-10 text-orange-700")} />,
+    bgColor: "bg-orange-700/10",
   },
 ];
 
