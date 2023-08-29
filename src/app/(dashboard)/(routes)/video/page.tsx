@@ -7,13 +7,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { FileAudio } from "lucide-react";
-
-import Heading from "@/components/heading";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Loader } from "@/components/loader";
 import { Empty } from "@/components/empty";
 import { formSchema } from "./constants";
 import { useProModal } from "@/hooks/use-pro-modal";
