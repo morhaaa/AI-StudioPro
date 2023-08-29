@@ -20,6 +20,7 @@ import { Loader } from "@/components/loader";
 import { cn } from "@/lib/utils";
 import { BotAvatar } from "@/components/bot-avatar";
 import { UserAvatar } from "@/components/avatar";
+import Lotties from "@/components/ui/lotties";
 
 const Conversation: React.FC = () => {
   const router = useRouter();
@@ -76,9 +77,10 @@ const Conversation: React.FC = () => {
         bgColor="bg-orange-500/10 border-b border-slate-200"
       />
 
-      <div className="px-4 lg:px-10 flex flex-col gap-4 h-full py-4 overflow-hidden">
+      <div className="px-4 lg:px-10 flex flex-col gap-2 md:gap-4 h-full py-4 overflow-hidden">
         <div className="bg-slate-100 h-full rounded-xl border border-slate-200 flex flex-col overflow-hidden">
           <div className="h-full overflow-hidden">
+            {/* No conversation started */}
             {messages.length === 0 && !isLoading && (
               <Empty label="No conversation started." />
             )}
@@ -114,11 +116,17 @@ const Conversation: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-4 flex flex-col w-full">
+          {/* Loader */}
+          <div className="flex w-full items-center justify-center">
+            {isLoading && <Lotties animation="typing" height={50} />}
+          </div>
+
+          {/*input chat*/}
+          <div className="px-4 pb-2 flex flex-col w-full">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm flex flex-col md:flex-row bg-white"
+                className="rounded-lg border w-full p-2 md:p-4 px-3 md:px-6 focus-within:shadow-sm flex flex-col md:flex-row bg-white"
               >
                 <FormField
                   name="prompt"
@@ -126,7 +134,7 @@ const Conversation: React.FC = () => {
                     <FormItem className="col-span-12 lg:col-span-10 w-full">
                       <FormControl className="m-0 p-0">
                         <Input
-                          className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent w-full"
+                          className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent w-full px-2"
                           disabled={isLoading}
                           placeholder="How do I calculate the radius of a circle?"
                           {...field}
@@ -145,25 +153,6 @@ const Conversation: React.FC = () => {
             </Form>
           </div>
         </div>
-
-        {/* <div className="bg-slate-200 rounded-lg grow ">
-          <div className="space-y-4 mt-4">
-            {isLoading && (
-              <div className="p-8 rounded-lg w-full flex items-center bg-muted justify-center ">
-                <Loader />
-              </div>
-            )}
-
-            <div>
-              {messages.length === 0 && !isLoading && (
-                <Empty label="No conversation started." />
-              )}
-
-           
-              
-            </div>
-          </div>
-                    </div> */}
       </div>
     </div>
   );
