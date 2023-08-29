@@ -1,7 +1,5 @@
 "use client";
-import { useState } from "react";
-import Heading from "@/components/heading";
-import { Code } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -15,12 +13,12 @@ import { Form, FormField, FormItem, FormControl } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Empty } from "@/components/empty";
-import { Loader } from "@/components/loader";
 import { cn } from "@/lib/utils";
 import { BotAvatar } from "@/components/bot-avatar";
 import { UserAvatar } from "@/components/avatar";
 import { toast } from "react-hot-toast";
 import { useProModal } from "@/hooks/use-pro-modal";
+import Lotties from "@/components/ui/lotties";
 
 const CodePage: React.FC = () => {
   const router = useRouter();
@@ -31,6 +29,13 @@ const CodePage: React.FC = () => {
     resolver: zodResolver(formSchema),
     defaultValues: { prompt: "" },
   });
+
+  const chatRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -57,27 +62,77 @@ const CodePage: React.FC = () => {
   };
 
   return (
-    <div>
-      <Heading
-        title="Code Generation"
-        description="Generate code using descriptive text"
-        icon={Code}
-        iconColor="text-green-700"
-        bgColor="bg-green-700/10"
-      />
-      <div className="px-4 lg:px-8">
+    <div className="h-full overflow-hidden flex flex-col">
+      <div className="h-full overflow-hidden">
+        {messages.length === 0 && !isLoading && (
+          <Empty label="No conversation started." />
+        )}
+
+        <div
+          ref={chatRef}
+          className="flex flex-col gap-6 px-3 py-6 overflow-auto h-full"
+        >
+          {messages.map((msg, index) => (
+            <div
+              key={index}
+              className={cn(
+                "flex gap-2",
+                msg.role === "user"
+                  ? "flex-row-reverse pl-10 lg:pl-20"
+                  : "pr-10 lg:pr-20"
+              )}
+            >
+              <div className="hidden md:flex">
+                {msg.role === "user" ? <UserAvatar /> : <BotAvatar />}
+              </div>
+              <div
+                className={cn(
+                  " px-4 py-2 rounded-md flex items-center shadow-lg border",
+                  msg.role === "user" ? "bg-blue-500" : "bg-slate-400 "
+                )}
+              >
+                <ReactMarkdown
+                  components={{
+                    pre: ({ node, ...props }) => (
+                      <div className="overflow-auto w-full my-2 bg-slate-700   p-2 rounded-lg">
+                        <pre {...props} />
+                      </div>
+                    ),
+                    code: ({ node, ...props }) => (
+                      <code
+                        className=" bg-slate-700 rounded-lg p-1"
+                        {...props}
+                      />
+                    ),
+                  }}
+                  className="text-sm text-white"
+                >
+                  {msg.content || ""}
+                </ReactMarkdown>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Loader */}
+      <div className="flex w-full items-center justify-center">
+        {isLoading && <Lotties height={50} />}
+      </div>
+
+      <div className="px-4 pb-2 flex flex-col w-full">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-2"
+            className="rounded-lg border w-full p-2 md:p-4 px-3 md:px-6 focus-within:shadow-sm flex flex-col md:flex-row bg-white"
           >
             <FormField
               name="prompt"
               render={({ field }) => (
-                <FormItem className="col-span-12 lg:col-span-10">
+                <FormItem className="col-span-12 lg:col-span-10 w-full">
                   <FormControl className="m-0 p-0">
                     <Input
-                      className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
+                      className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent pl-2"
                       disabled={isLoading}
                       placeholder="Simple toggle button using react hooks"
                       {...field}
@@ -91,46 +146,6 @@ const CodePage: React.FC = () => {
             </Button>
           </form>
         </Form>
-        <div className="space-y-4 mt-4">
-          {true && (
-            <div className="p-8 rounded-lg w-full flex items-center bg-muted justify-center ">
-              <Loader />
-            </div>
-          )}
-          {messages.length === 0 && !isLoading && (
-            <Empty label="No conversation started." />
-          )}
-          <div className="flex flex-col-reverse gap-y-4">
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={cn(
-                  "p-8 w-full flex items-start gap-x-8 rounded-lg",
-                  msg.role === "user"
-                    ? "bg-white border border-black/10"
-                    : "bg-muted"
-                )}
-              >
-                {msg.role === "user" ? <UserAvatar /> : <BotAvatar />}
-                <ReactMarkdown
-                  components={{
-                    pre: ({ node, ...props }) => (
-                      <div className="overflow-auto w-full my-2 bg-black/10 p-2 rounded-lg">
-                        <pre {...props} />
-                      </div>
-                    ),
-                    code: ({ node, ...props }) => (
-                      <code className="bg-black/10 rounded-lg p-1" {...props} />
-                    ),
-                  }}
-                  className="text-sm overflow-hidden leading-7"
-                >
-                  {msg.content || ""}
-                </ReactMarkdown>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   );

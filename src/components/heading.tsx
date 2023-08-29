@@ -1,6 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import {
+  Code,
   FileAudio,
   FileVideo,
   ImageIcon,
@@ -38,6 +39,13 @@ const headers = [
     description: "Turn your prompt into video.",
     icon: <Video className={cn("w-10 h-10 text-orange-700")} />,
     bgColor: "bg-orange-700/10",
+  },
+  {
+    id: "code",
+    title: "Code Generation",
+    description: "Generate code using descriptive text",
+    icon: <Code className={cn("w-10 h-10 text-green-700")} />,
+    bgColor: "bg-green-700/10",
   },
 ];
 
