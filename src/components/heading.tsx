@@ -7,6 +7,7 @@ import {
   ImageIcon,
   MessageSquare,
   Music,
+  Settings,
   Video,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -47,6 +48,12 @@ const headers = [
     icon: <Code className={cn("w-10 h-10 text-green-700")} />,
     bgColor: "bg-green-700/10",
   },
+  {
+  id:'settings',
+  title:"Settings",
+  description:"Manage account settings.",
+  icon:<Settings className={cn("w-10 h-10 text-gray-700")} />,
+  bgColor:"bg-gray-700/10"}
 ];
 
 const Heading: React.FC = ({}) => {
