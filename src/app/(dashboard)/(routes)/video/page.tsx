@@ -65,9 +65,14 @@ const VideoPage = () => {
         </div>
       </div>
 
-      <div className="flex w-full items-center justify-center">
-        {isLoading && <Lotties height={50} />}
-      </div>
+      {isLoading && (
+        <div className="flex flex-col w-full items-center justify-center">
+          <Lotties height={50} />
+          <p className="font-medium text-sm pb-2 text-gray-600">
+            It could take up to 5 minutes
+          </p>
+        </div>
+      )}
 
       <div className="px-4 pb-2 ">
         <Form {...form}>

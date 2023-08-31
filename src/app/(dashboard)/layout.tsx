@@ -9,7 +9,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const isPro = await checkSubscription();
 
   return (
-    <div className="h-screen w-screen flex  bg-[#000000]">
+    <div className="h-screen w-screen flex   bg-gradient-to-br from-slate-800 to-black">
       <div className="hidden h-full md:flex md:flex-col md:basis-1/5">
         <Sidebar isPro={isPro} apiLimitCount={apiLimitCount} />
       </div>
