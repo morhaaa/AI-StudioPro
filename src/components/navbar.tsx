@@ -7,14 +7,7 @@ const Navbar: React.FC = async () => {
   const apiLimitCount = await getApiLimitCount();
   const isPro = await checkSubscription();
 
-  return (
-    <nav className="flex items-center p-4 w-full">
-      <MobileSidebar apiLimitCount={apiLimitCount} isPro={isPro} />
-      <div className="flex justify-end w-full">
-        <UserButton afterSignOutUrl="/" />
-      </div>
-    </nav>
-  );
+  return <MobileSidebar apiLimitCount={apiLimitCount} isPro={isPro} />;
 };
 
 export default Navbar;

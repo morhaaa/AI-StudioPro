@@ -21,7 +21,7 @@ const MobileSidebar: React.FC<IMobileSidebar> = ({ apiLimitCount, isPro }) => {
   }
 
   return (
-    <div className="md:hidden">
+    <div className="md:hidden pt-2 px-2 ">
       <Sheet>
         <SheetTrigger>
           <Button variant={"ghost"} size={"icon"}>
@@ -29,7 +29,9 @@ const MobileSidebar: React.FC<IMobileSidebar> = ({ apiLimitCount, isPro }) => {
           </Button>
         </SheetTrigger>
         <SheetContent side={"left"} className="p-0">
-          <Sidebar apiLimitCount={apiLimitCount} isPro={isPro} />
+          <div className="h-full bg-gradient-to-br from-slate-800 to-black">
+            <Sidebar apiLimitCount={apiLimitCount} isPro={isPro} />
+          </div>
         </SheetContent>
       </Sheet>
     </div>

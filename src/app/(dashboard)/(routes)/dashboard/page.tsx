@@ -35,7 +35,7 @@ const Dashboard: React.FC = () => {
               <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
                 {tool.icon}
               </div>
-              <p className="font-semibold">{tool.title}</p>
+              <p className="font-semibold md:text-base text-sm">{tool.title}</p>
             </div>
             <ArrowRight className="w-5 h-5 mr-4" />
           </Card>

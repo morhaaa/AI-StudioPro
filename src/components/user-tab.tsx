@@ -13,11 +13,13 @@ interface Props {
 const UserTab: React.FC<Props> = ({ isPro, apiLimitCount }) => {
   const { user } = useUser();
   return (
-    <div className="bg-gray-700 rounded-md flex flex-col gap-3 py-4  px-2  border border-gray-600">
+    <div className="bg-gray-700 rounded-md flex flex-col gap-6 py-6  px-2  border border-gray-600">
       {/*User Info*/}
-      <div className="flex px-1">
-        <UserButton afterSignOutUrl="/" />
-        <div className="hidden xl:flex xl:flex-col xl:w-full xl:pl-2">
+      <div className="flex justify-center px-1">
+        <div className="pr-3">
+          <UserButton afterSignOutUrl="/" />
+        </div>
+        <div className="flex md:hidden xl:flex flex-col w-full">
           <p className="text-white font-semibold text-xs ">{user?.fullName}</p>
           <p className="text-white text-xs ">
             {user?.primaryEmailAddress
@@ -26,7 +28,7 @@ const UserTab: React.FC<Props> = ({ isPro, apiLimitCount }) => {
           </p>
         </div>
 
-        <div className="flex items-center pl-2 xl:pl-0">
+        <div className="flex items-center md:hidden xl:flex">
           <p className="bg-green-400 font-semibold text-xs px-1 rounded-md">
             {isPro ? "PRO" : "FREE"}
           </p>
