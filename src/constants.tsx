@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Code, ImageIcon, MessageSquare, Music, Video } from "lucide-react";
 
-export const MAX_FREE_COUNTS = 5;
+export const MAX_FREE_COUNTS = 4;
 
 export const tools = [
   {

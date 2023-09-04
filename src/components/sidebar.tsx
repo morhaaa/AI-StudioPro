@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Montserrat } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
-import { FreeCounter } from "./free-Counter";
 import { tools } from "@/constants";
 import UserTab from "./user-tab";
 
@@ -55,18 +54,10 @@ const Sidebar: React.FC<ISidebar> = ({ apiLimitCount, isPro }) => {
         </nav>
       </div>
       <div className=" px-2 pb-4">
-        <UserTab />
+        <UserTab apiLimitCount={apiLimitCount} isPro={isPro} />
       </div>
     </div>
   );
-  {
-    /*
-    <div className="space-y-4 py-4 flex flex-col h-full text-white bg-inherit">
-      
-      <FreeCounter apiLimitCount={apiLimitCount} isPro={isPro} />
-    </div>
-    */
-  }
 };
 
 export default Sidebar;

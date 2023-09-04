@@ -10,14 +10,15 @@ const Dashboard: React.FC = () => {
   const router = useRouter();
 
   const { user } = useUser();
+
+  const userName: string = user?.firstName ? user.firstName : "";
   return (
     <div className="h-full overflow-auto flex flex-col gap-3 justify-center">
       <div className="text-center">
         <h2 className="text-3xl md:text-4xl font-bold md:py-1">
-          Hi {user?.firstName}!
+          Hi {userName.charAt(0).toUpperCase() + userName.slice(1)}
         </h2>
         <p className="px-4 md:px-20 lg:px-32 text-xl md:text-2xl">
-          {" "}
           Unlock the power of AI
         </p>
       </div>
