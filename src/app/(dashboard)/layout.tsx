@@ -16,9 +16,9 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
       <main className="w-full h-full py-6 px-4 ">
         <div className="bg-white rounded-2xl flex flex-col h-full">
           <Navbar />
-          <div className="h-full w-full flex flex-col overflow-hidden md:pt-2">
+          <div className="h-full w-full flex flex-col overflow-hidden md:pt-6">
             <Heading />
-            <div className="px-4 lg:px-10 flex flex-col gap-2 md:gap-4 h-full py-4 overflow-hidden">
+            <div className="px-4 lg:px-10 flex flex-col gap-2 md:gap-4 h-full pt-4 pb-6 overflow-hidden">
               <div className="bg-slate-100 h-full rounded-xl border border-slate-200 flex flex-col overflow-hidden">
                 {children}
               </div>
