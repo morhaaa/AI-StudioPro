@@ -12,7 +12,7 @@ const LandingLayout = ({ children }: { children: React.ReactNode }) => {
           className="object-cover"
         />
       </div>
-      <LandingNavbar/>
+      <LandingNavbar />
       <div className="h-full w-full z-0 overflow-y-auto">{children}</div>
     </main>
   );
