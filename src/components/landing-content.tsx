@@ -10,35 +10,6 @@ import {
   TrendingUp,
 } from "lucide-react";
 
-const testimonials = [
-  {
-    name: "Joel",
-    avatar: "J",
-    title: "Software Engineer",
-    description: "This is the best application I've ever used!",
-  },
-  {
-    name: "Antonio",
-    avatar: "A",
-    title: "Designer",
-    description: "I use this daily for generating new photos!",
-  },
-  {
-    name: "Mark",
-    avatar: "M",
-    title: "CEO",
-    description:
-      "This app has changed my life, cannot imagine working without it!",
-  },
-  {
-    name: "Mary",
-    avatar: "M",
-    title: "CFO",
-    description:
-      "The best in class, definitely worth the premium subscription!",
-  },
-];
-
 const features = [
   {
     icon: <HelpCircle />,
@@ -80,7 +51,7 @@ const features = [
 
 export const LandingContent = () => {
   return (
-    <div className="px-4 md:px-8 :px-12">
+    <div className="px-4 md:px-8 lg:px-12 h-[80%]">
       <div className="bg-[#000814]/70 backdrop-blur-md flex flex-col  gap-2 md:gap-4 items-center rounded-md py-6 md:py-8">
         <h2 className="text-3xl md:text-4xl font-bold text-slate-50">
           Our features
